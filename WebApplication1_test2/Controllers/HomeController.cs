@@ -20,12 +20,36 @@ namespace WebApp1_T1.Controllers
         [HttpPost]
         public IActionResult Index(WorkshopEquipmentModel model)
         {
-            return View(model);
+            return View();
         }
 
         [HttpGet]
         public IActionResult Index()
         {
+            var workshop = _context.Workshop.ToList();
+
+            return View(workshop);
+        }
+
+        [HttpPost]
+        public IActionResult Add(string workshop, string equipment)
+        {
+            var workshopeq = new Workshopeq
+            {
+                workshop = workshop,
+                equipment = equipment
+            };
+
+            _context.Workshop.Add(workshopeq);
+            _context.SaveChanges();
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+      
             return View();
         }
 
