@@ -4,7 +4,26 @@
     ViewData["Title"] = "Home Page";
 }
 
-<a href="/home/add"><button class="btn btn-primary">Новое оборудование</button></a>
+<a href="/home/add"><button class="btn btn-success">Добавить оборудование</button></a>
+
+
+<form method="post" class="row row-cols-lg-auto g-3 align-items-center mt-3">
+
+
+    <div class="col-12">
+        <input type="text" name="workshop" class="form-control" id="workshop" aria-describedby="emailHelp" placeholder="Цех">
+             
+    </div>
+
+    <div class="col-12">
+        <input type="text" name="equipment" id="equipment" class="form-control" placeholder="Оборудование" aria-describedby="emailHelp">
+
+    </div>
+
+    <button type="submit" class="btn btn-primary row-cols-lg-auto g-3 align-items-center mt-3" style="color: black;">Поиск</button>
+
+
+</form>
 
 <table class="table">
     <tr>
@@ -16,10 +35,10 @@
     {
         <tr>
             <td>@item.workshop</td>
-            <td>>@item.equipment</td>
+            <td>@item.equipment</td>
             <td>
                 <a href="/home/edit/@item.Id">Редактировать</a>
-                <a href="/home/remove/@item.Id">Удалить</a>
+                <a href="/home/remove/@item.Id" style="color: red;">Удалить</a>
             </td>
         </tr>
         

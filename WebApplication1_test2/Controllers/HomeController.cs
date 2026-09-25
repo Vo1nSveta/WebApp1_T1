@@ -18,9 +18,25 @@ namespace WebApp1_T1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(WorkshopEquipmentModel model)
+        public IActionResult Index(string workshop, string equipment)
         {
-            return View();
+            var query = _context.Workshop.AsQueryable();
+
+            if(!string.IsNullOrEmpty(workshop))
+            {
+                query = query.Where(x => x.workshop.Contains(workshop));
+
+            }
+
+            if (!string.IsNullOrEmpty(equipment))
+            {
+                query = query.Where(x => x.equipment.Contains(equipment));
+
+            }
+
+            var Workshop = query.ToList();
+
+            return View(Workshop);
         }
 
         [HttpGet]
@@ -63,7 +79,7 @@ namespace WebApp1_T1.Controllers
             if (newWorkshop != null)
             {
                 newWorkshop.workshop = workshop;
-                newWorkshop.workshop = equipment;
+                newWorkshop.equipment = equipment;
 
                 _context.Workshop.Update(newWorkshop);
                 _context.SaveChanges();
