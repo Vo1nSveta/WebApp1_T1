@@ -53,6 +53,36 @@ namespace WebApp1_T1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        #region -- Редактирование
+
+        [HttpPost]
+        public IActionResult Edit(string workshop, string equipment, int id)
+        {
+            var newWorkshop = _context.Workshop.FirstOrDefault(x => x.Id == id);
+
+            if (newWorkshop != null)
+            {
+                newWorkshop.workshop = workshop;
+                newWorkshop.workshop = equipment;
+
+                _context.Workshop.Update(newWorkshop);
+                _context.SaveChanges();
+            }
+            
+            return RedirectToAction(nameof(Index));
+        }
+        
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var newWorkshop = _context.Workshop.FirstOrDefault(x => x.Id == id);
+
+            return View(newWorkshop);
+        }
+
+        #endregion
+
+
         [HttpGet]
         public IActionResult Add()
         {
