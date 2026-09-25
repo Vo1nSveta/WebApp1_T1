@@ -34,16 +34,23 @@ namespace WebApp1_T1.Controllers
         [HttpPost]
         public IActionResult Add(string workshop, string equipment)
         {
-            var workshopeq = new Workshopeq
+            if (string.IsNullOrWhiteSpace(workshop) ||
+                string.IsNullOrWhiteSpace(equipment))
+            {
+                ModelState.AddModelError("", "Заполните оба поля: цех и оборудование.");
+                return View();
+            }
+
+            var newWorkshop = new Workshop
             {
                 workshop = workshop,
                 equipment = equipment
             };
 
-            _context.Workshop.Add(workshopeq);
+            _context.Workshop.Add(newWorkshop);
             _context.SaveChanges();
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -51,6 +58,20 @@ namespace WebApp1_T1.Controllers
         {
       
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Remove(int id)
+        {
+            var newWorkshop = _context.Workshop.FirstOrDefault(x => x.Id == id);
+
+            if (newWorkshop != null)
+            {
+
+                _context.Workshop.Remove(newWorkshop);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
